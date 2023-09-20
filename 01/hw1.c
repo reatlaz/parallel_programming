@@ -1,27 +1,23 @@
 #include <stdio.h>
-int main(void) {
-   // FILE * fh = fopen("barsiq.jpeg", "rb");
-   // FILE * res = fopen("newbarsiq.jpeg", "wb");
 
-   FILE * fh = fopen("kek.txt", "rb");
-   FILE * res = fopen("newkek.txt", "wb");
-   // int size = 200;
-   fseek(fh, 0, SEEK_END);
-   long size = ftell(fh);
-   char f[size];
+int main() {
+    FILE *fh = fopen("barsiq.jpeg", "rb");
+    fseek(fh, 0, SEEK_END);
+    long size = ftell(fh);
+    rewind(fh);
 
-   fgets(f, size, fh);
+    char f[size];
+    int x = 5;
 
-   printf("%s", f);
-   // int x = 5;
-   // for(int i=0; i < size; i++){
-   //    f[i] += (i*x) & 256;
-   // }
+    fread(f, sizeof(char), size, fh);
 
+    fclose(fh);
 
-   fputs(f, fh);
+    for (long i = 0; i < size; i++) {
+        f[i] += (i * x) & 256;
+    }
 
-   fclose(fh);
-   fclose(res);
-   return 0;
+    fh = fopen("newbarsiq.jpeg", "wb"); 
+    fwrite(f, sizeof(char), size, fh);
+    return 0;
 }
