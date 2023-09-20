@@ -19,5 +19,6 @@ int main() {
 
     fh = fopen("newbarsiq.jpeg", "wb"); 
     fwrite(f, sizeof(char), size, fh);
+	fclose(fh);
     return 0;
 }
