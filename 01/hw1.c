@@ -1,24 +1,27 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int main() {
-    FILE *fh = fopen("barsiq.jpeg", "rb");
+    FILE *fh = fopen("../input.jpeg", "rb");
     fseek(fh, 0, SEEK_END);
-    long size = ftell(fh);
+    int size = ftell(fh);
     rewind(fh);
-
-    char f[size];
-    int x = 5;
+    char* f;
+    f = malloc(size * sizeof(char));
+    int x = 13;
 
     fread(f, sizeof(char), size, fh);
 
     fclose(fh);
 
-    for (long i = 0; i < size; i++) {
-        f[i] += (i * x) & 256;
+    for (int i = 0; i < size; i++) {
+        f[i] += (i * x) & 255;
     }
 
-    fh = fopen("newbarsiq.jpeg", "wb"); 
+    fh = fopen("output.jpeg", "wb"); 
     fwrite(f, sizeof(char), size, fh);
 	fclose(fh);
+    free(f);
     return 0;
 }

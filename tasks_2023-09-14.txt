@@ -1,0 +1,68 @@
+1. CreateThread
+
+1a. TlsSetValue / TlsGetValue
+1b. HeapCreate / HeapAlloc
+1c. CriticalSection
+1d. Interlocked...
+1e. CreateEvent
+1f. CreateMutex
+1g. CreateSemaphore
+
+2. pthread_create
+
+2a. pthread_mutex_lock
+
+3. std::thread, std::mutex
+
+3a. std::mutex
+
+4. OMP
+
+5. CreateProcess
+
+5a. CreatePipe
+5a2. CreateNamedPipe
+5a3. AnonymousPipeServerStream
+5b. socket / listen / connect - tcp server/client
+5c. WriteProcessMemory / ReadProcessMemory
+5c2. CreateEvent("Global\\")
+5d. MapViewOfFile
+5e. SMB/share - несколько компьютеров (psexec.exe, wmic, ...) 
+5e2. запустить процессы из-под другого пользователя
+5f. DDE
+5g. SendMessage / PeekMessage
+5g2. SendMessage / PeekMessage with filter
+5h. CreateMutex
+5i. CreateSemaphore
+5j. text files
+5k. SharedMemory
+5l. Сделать постоянный адрес загрузки приложения // relocs disable
+5m. Узнать base address в дочернем процесс
+5n. #pragma comment(linker, "/SECTION:.shared,RWS") / #pragma data_seg(".shared")
+5o. boost::shared_memory_object
+5p. windows_shared_memory
+
+6. fork
+6a. mkfifo
+6a2. pipe
+6b. socket / listen / connect - tcp server/client
+6c. signal
+6d. text files
+6e. shm_open
+6f. msgget
+6g. mmap(NULL, sizeof(global_data), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+6h. pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
+6i. socket_unix
+
+7. MPI_2, MPI_all
+
+7a. Isend (асинхронность)
+7b. Свой коммутатор
+7c. Группы
+7d. Свой тип данных
+7e. Своя топология
+7f. MPI_Comm_split
+
+8. CUDA
+8a. CudaMemcpyToSymbol
+8b. __shared__
