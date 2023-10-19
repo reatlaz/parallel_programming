@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
-
+#include <iostream>
+#include <thread>
 
 // номер группы 534
 // место в списке 4
@@ -10,7 +10,6 @@
 // B = 7 + 538 % 7 = 13
 
 #define B 13
-
 #define N size
 
 #define THREAD_CREATE_ERROR -10
@@ -18,6 +17,7 @@
 
 #define INPUT_FILE "../input.jpeg"
 #define OUTPUT_FILE "output.jpeg"
+
 char* f;
 const int x = B;
 int size;
@@ -27,7 +27,7 @@ int read_file() {
     fseek(fh, 0, SEEK_END);
     size = ftell(fh);
     rewind(fh);
-    f = malloc(size * sizeof(char));
+    f = (char *)malloc(size * sizeof(char));
     if (f == NULL) {
         printf("Ошибка выделения памяти.\n");
         return 1;
@@ -49,7 +49,7 @@ typedef struct arguments {
     int threadnum;
 } arguments_t;
 
-void * do_stuff(void * args) {
+void do_stuff(void * args) {
     arguments_t *arg = (arguments_t*) args;
     int threadnum = arg->threadnum;
     int k;
@@ -59,14 +59,13 @@ void * do_stuff(void * args) {
         if (k >= N) break;
         f[k] += (k * x) & 255;
     }
-    return 0;
 }
 
 
 int main() {
 
     read_file();
-    pthread_t threads[B];
+    std::thread threads[B];
     arguments_t args[B];
     int status;
     int status_addr;
@@ -77,20 +76,12 @@ int main() {
 
     // создание потоков
     for (int i = 0; i < B; i++) {
-        status = pthread_create(&threads[i], NULL, do_stuff, (void*) &args[i]);
-        if (status != 0) {
-            printf("error: create thread, status = %d\n", status);
-            exit(THREAD_CREATE_ERROR);
-        }
+        threads[i] = std::thread(do_stuff, (void *)&args[i]);
     }
 
     // запуск потоков
     for (int i = 0; i < B; i++) {
-        status = pthread_join(threads[i], NULL);
-        if (status != 0) {
-            printf("error: join thread, status = %d\n", status);
-            exit(THREAD_JOIN_ERROR);
-        }
+        threads[i].join();
     }
 
     // остаток от деления на B последовательностей байтов
